@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carrinho - Meu Mercadinho</title>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS DO PROJETO -->
+    <link rel="stylesheet" href="../css/login.css">
+
+</head>
+
+<body class="tela-produtos">
+
+    <!-- MENU DE NAVEGAÇÃO -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-mercado">
+
+        <div class="container">
+
+            <!-- LOGO -->
+            <a class="navbar-brand fw-bold" href="home.html">
+                🛒 Meu Mercadinho
+            </a>
+
+            <!-- BOTÃO MENU CELULAR -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar"
+                aria-controls="menuNavbar" aria-expanded="false" aria-label="Abrir menu">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <!-- LINKS DO MENU -->
+            <div class="collapse navbar-collapse" id="menuNavbar">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">
+                            Início
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="menuListaProdutos">
+                        <a class="nav-link" href="listaProduto.html">
+                            Produtos
+                        </a>
+                    </li>
+
+                    <!-- SOMENTE ADMINISTRADOR -->
+                    <li class="nav-item" id="menuCadastrarProduto">
+                        <a class="nav-link" href="cadastroProduto.html">
+                            Cadastrar Produto
+                        </a>
+                    </li>
+
+                    <!-- SOMENTE ADMINISTRADOR -->
+                    <li class="nav-item" id="menuCadastros">
+                        <a class="nav-link" href="listacadastro.html">
+                            Gerenciar Usuários
+                        </a>
+                    </li>
+
+                    <!-- SOMENTE ADMINISTRADOR -->
+                    <li class="nav-item" id="menuVendas">
+                        <a class="nav-link" href="historicoVendas.html">
+                            Histórico de Vendas
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="carrinho.html">
+                            🛒 Carrinho
+                        </a>
+                    </li>
+
+                    <li class="nav-item ms-lg-2">
+                        <a class="nav-link" href="#" onclick="sair(); return false;">
+                            Sair
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- CONTEÚDO -->
+    <main class="container py-5">
+
+        <h1 class="mb-4">🛒 Meu Carrinho</h1>
+
+        <!-- PRODUTOS -->
+        <section class="mb-5">
+
+            <h3 class="mb-3">Produtos selecionados</h3>
+
+            <div id="dadosCarrinho"></div>
+
+            <p id="mensagemCarrinho" class="text-center mt-3"></p>
+
+        </section>
+
+        <!-- RESUMO DA COMPRA -->
+        <section class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <h3 class="mb-3">Resumo da compra</h3>
+
+                <div class="d-flex justify-content-between mb-2">
+
+                    <span>Total de itens:</span>
+
+                    <strong id="totalItens">0</strong>
+
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between">
+
+                    <h4>Total a pagar:</h4>
+
+                    <h4 id="valorTotal" class="text-success">
+                        R$ 0,00
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FINALIZAÇÃO DA VENDA -->
+        <section class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <h3 class="mb-3">Finalizar compra</h3>
+
+                <!-- FORMA DE PAGAMENTO -->
+                <div class="mb-3">
+
+                    <label for="formaPagamento" class="form-label">
+                        Forma de pagamento
+                    </label>
+
+                    <select id="formaPagamento" class="form-select">
+
+                        <option value="">Selecione uma forma de pagamento</option>
+
+                        <option value="Pix">Pix</option>
+
+                        <option value="Cartão de crédito">Cartão de crédito</option>
+
+                        <option value="Cartão de débito">Cartão de débito</option>
+
+                        <option value="Dinheiro">Dinheiro</option>
+
+                    </select>
+
+                </div>
+
+                <!-- PAGAMENTO EM DINHEIRO -->
+                <div id="areaDinheiro" class="mb-3" style="display: none;">
+
+                    <label for="valorRecebido" class="form-label">
+                        Valor recebido
+                    </label>
+
+                    <input type="number" id="valorRecebido" class="form-control" placeholder="Digite o valor recebido"
+                        min="0" step="0.01">
+
+                    <p class="mt-3">
+                        Troco:
+
+                        <strong id="troco" class="text-success">
+                            R$ 0,00
+                        </strong>
+                    </p>
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-grid gap-2">
+
+                    <button type="button" id="btnFinalizar" class="btn btn-success btn-lg">
+
+                        Confirmar e finalizar venda
+
+                    </button>
+
+                    <button type="button" class="btn btn-outline-danger" onclick="limparCarrinho()">
+
+                        Limpar carrinho
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT DE PERMISSÕES -->
+    <script src="../javaScript/permissoes.js"></script>
+
+    <!-- JAVASCRIPT DO CARRINHO -->
+    <script src="../javaScript/carrinho.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
