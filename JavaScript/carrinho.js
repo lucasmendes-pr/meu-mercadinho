@@ -1,4 +1,3 @@
-
 // =====================================================
 // IDENTIFICAR O USUÁRIO E SEU CARRINHO
 // =====================================================
@@ -53,6 +52,39 @@ function salvarCarrinhoAtual(carrinho) {
     if (!chave) return;
 
     localStorage.setItem(chave, JSON.stringify(carrinho));
+}
+
+
+// =====================================================
+// SINCRONIZAR O CARRINHO COM OS PRODUTOS CADASTRADOS
+// (se o administrador mudou preço, nome ou foto de um
+// produto, o carrinho passa a mostrar os dados atuais)
+// =====================================================
+
+function sincronizarCarrinhoComProdutos() {
+
+    const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    const carrinho = obterCarrinhoAtual();
+
+    carrinho.forEach(item => {
+
+        const produto = produtos.find(p => p.id === item.id);
+
+        if (produto) {
+
+            item.preco = Number(produto.preco);
+
+            item.descricao = produto.descricao;
+
+            item.imgProduto = produto.imgProduto;
+
+        }
+
+    });
+
+    salvarCarrinhoAtual(carrinho);
+
 }
 
 
@@ -113,6 +145,9 @@ function carregarCarrinho() {
     const usuario = obterUsuarioLogado();
 
     if (!usuario) return;
+
+    // atualiza preço, nome e foto com os dados atuais dos produtos
+    sincronizarCarrinhoComProdutos();
 
     const carrinho = obterCarrinhoAtual();
 
@@ -494,6 +529,9 @@ function finalizarVenda() {
     const usuario = obterUsuarioLogado();
 
     if (!usuario) return;
+
+    // garante que a venda use os preços atuais dos produtos
+    sincronizarCarrinhoComProdutos();
 
     let carrinho = obterCarrinhoAtual();
 
